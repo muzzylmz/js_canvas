@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	}
+</style>
+</head>
+<body>
+
+
+
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+    <input type = "color" id = "picker">
+</body>
+</html>
+
+
+<script>
+	var canvas = document.getElementById("myCanvas");
+	var ctx = canvas.getContext("2d");
+	var x=0;
+	var y=0;
+	var radius= 10;
+	var color= 'red';
+	canvas.width= window.innerWidth*0.8;
+	canvas.height= window.innerHeight*0.8;
+	var penDown=true;
+	// # define draw function
+
+		// 0,0 means x, y
+		// ctx.fillRect(0,0,150,75);
+	  // ctx.beginPath()
+	function draw(x,y){
+		if (penDown) {
+			ctx.beginPath();
+			ctx.fillStyle=color;
+			ctx.arc(x, y, radius,0,2 *Math.PI);
+			ctx.fill();
+		}
+	}
+
+		// move circle when mouse moves.
+		// offeset relates to parent container, page relate to document
+			canvas.addEventListener(
+				'mousemove',function(e){
+					// console.log(e);
+					// draw(, )
+					console.log(e.offsetX, e.offsetY);
+					console.log(e.pageX, e.pageY);
+					// x = e.offsetX;
+					// y = e.offsetY;
+					draw(e.pageX, e.pageY);
+				})
+				// react to key
+				// use this website to get keycode: https://css-tricks.com/snippets/javascript/javascript-keycodes/
+			window.addEventListener(
+				'keydown',function(e){
+					if (e.keyCode == 66) {
+						color="blue";
+						// color="blue";
+					}
+					else if (e.keyCode == 82) {
+							color="red";
+						// color="red";
+					}
+					else if (e.keyCode == 71) {
+							color="green";
+						// color="green";
+					}
+					else if (e.keyCode == 89) {
+					color="yellow";
+						// color="yellow";
+					}
+
+
+				})
+				// the space bar to clear and clean the canvas
+
+					window.addEventListener('keydown', function(e) {
+				  		if (e.keyCode == '32') {
+				    		ctx.clearRect(0,0, canvas.width, canvas.height);
+				  		}
+
+							if (e.keyCode == 38) {
+								penDown = false;
+							}
+
+							if (e.keyCode == 40) {
+								penDown = true;
+							}
+
+					})
+
+
+	// change the color with the color picker
+
+document.getElementById("picker").addEventListener('change', function(e){
+			color = e.target.value;
+
+		})
+
+// clear canvas
+
+window.addEventListener("orientationchange", function(e){
+			window.location.reload();
+
+		})
+
+
+
+</script>
